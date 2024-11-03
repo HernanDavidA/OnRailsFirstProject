@@ -1,0 +1,39 @@
+<div class="flex flex-col justify-center p-10 bg-gray-100 min-h-screen">
+  <h1 class="text-center text-3xl font-bold text-blue-600 mb-5">Reports of Coffees in <%= @coffee_station.place %></h1>
+
+  <div class="flex flex-col justify-center w-2/3 mx-auto border-4 border-blue-500 rounded-lg shadow-lg bg-white p-5">
+    <div class="flex flex-col justify-center mb-5">
+      <h1 class="text-center text-2xl font-bold text-blue-700">Coffee Station</h1>
+      <p class="text-lg">Coffee state: <span class="font-semibold text-blue-500"><%= @coffee_station.status == "empty" ? "The coffe is empty" : "The coffy is full" %></span></p>
+      <p>Description: <%= @coffee_station.description %></p>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <h1 class="text-center text-2xl font-bold text-blue-700 mb-2">Reports</h1>
+      <p class="text-lg mb-3">Reports: <span class="font-semibold text-blue-500"><%= @reports.count %></span></p>
+
+      <% latest_report = @coffee_station.reports.order(created_at: :desc).first %>
+      <% button_text = case latest_report&.status
+                      when "new_report" then "The coffee is empty"
+                      when "pending" then "Coffee is pending refill"
+                      when "in_progress" then "Refill in progress"
+                      when "done" then "Refill completed"
+                      else "Report Coffee Status"
+                      end %>
+      <p class="text-lg mb-5">Status report: <span class="font-semibold text-blue-500"><%= latest_report&.status != "new_report" ? "El café está en proceso de llenado" : "Cafétera ya llenada" %></span></p>
+      <%= button_to button_text, create_report_coffee_station_path(@coffee_station), method: :post, class: "button text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" %>
+    </div>
+    <div class="flex flex-col flex-wrap justify-center w-full mt-5">
+      <h1 class="text-center text-2xl font-bold text-blue-700 mb-2">Reports History</h1>
+
+      <% @reports.each do |report| %>
+        <div class="flex flex-col justify-center bg-blue-50 border-2 border-blue-300 rounded-lg shadow-md p-3 mb-4">
+          <h1 class="text-xl font-bold text-blue-600">Coffee Station</h1>
+          <p class="text-lg">Estado de reporte: <span class="font-semibold text-blue-500"><%= report.status == "done" ? "Completado" : report.status %></span></p>
+          <p class="text-sm">Fecha de creación: <%= report.created_at.strftime("%B %d, %Y %I : %M %p") %></p>
+          <p class="text-sm">Fecha de llenado: <%= report.updated_at.strftime("%B %d, %Y %I : %M %p") %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

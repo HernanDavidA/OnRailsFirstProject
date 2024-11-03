@@ -1,0 +1,16 @@
+
+<div class="flex flex-col justify-center">
+  <h1>Reports of Coffees</h1>
+
+  <div class="flex flex-col w-2/3 mx-auto">
+    <%= form_tag(select_coffee_stations_path, method: :post)  do  %>
+    <%= select_tag :place, options_for_select(@coffee_stations.map { |coffee| [coffee.place, coffee.id] }) %>
+  
+    <div class="bg-gray-50 "> 
+
+      <%= submit_tag "Continue" %>
+    </div>
+    <% end %>
+  </div>
+
+</div> 

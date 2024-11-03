@@ -1,0 +1,8 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+3rd_floor:
+  place: 3rd floor
+  description: MyText
+
+6th_floor:
+  place: 6th floor
+  description: MyText
